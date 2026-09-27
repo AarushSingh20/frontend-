@@ -1,0 +1,292 @@
+/*
+ * The rail is always the same dark colours, whichever theme (light or dark) the rest of the dashboard is in — a
+ * fixed set of the dark theme's own values, defined here so the whole file can keep using the usual "--cm-" and
+ * "--d-" names without caring which theme is active. Only this file needs to know that.
+ */
+.sidebar {
+  --cm-ink: #f4f0ff;
+  --cm-ink-dim: #b0a6d0;
+  --cm-ink-faint: #9187b2;
+  --cm-line: rgba(183, 155, 255, 0.14);
+  --cm-line-strong: rgba(183, 155, 255, 0.3);
+  --cm-violet-hi: #b79bff;
+  --d-fill-1: rgba(255, 255, 255, 0.045);
+  --d-fill-2: rgba(255, 255, 255, 0.065);
+  --d-fill-3: rgba(255, 255, 255, 0.11);
+  --d-accent-fill: rgba(122, 60, 255, 0.18);
+  --d-accent-fill-2: rgba(122, 60, 255, 0.2);
+  --d-nav-active: linear-gradient(90deg, rgba(122, 60, 255, 0.26), rgba(122, 60, 255, 0.1));
+  --d-popover-bg: #1a1430;
+  --d-popover-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.9);
+  --d-strong: #fff;
+  --d-brand-blue: #6aa0ff;
+  --d-sidebar-shadow: 0 30px 70px -24px rgba(0, 0, 0, 0.85);
+
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  width: 272px;
+  height: 100vh;
+  height: 100svh;
+  color: var(--cm-ink); /* the fixed colour above, not whichever the site's own theme currently has */
+  background: linear-gradient(180deg, #100a24 0%, #0a0616 100%);
+  transition: width 0.4s var(--cm-ease), margin 0.4s var(--cm-ease);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  height: 84px;
+  padding: 0 22px;
+}
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--cm-ink); /* anchors have their own default link colour otherwise, which would win over inheriting this */
+  text-decoration: none;
+}
+.logoImg {
+  flex: none;
+  filter: drop-shadow(0 4px 14px rgba(122, 60, 255, 0.65));
+}
+.wordmark {
+  font-size: 1.16rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+.wordmark em {
+  color: var(--d-brand-blue);
+  font-style: normal;
+}
+
+.nav {
+  flex: 1;
+  padding: 6px 14px 12px;
+  overflow-y: auto;
+  overflow-x: visible;
+}
+.group + .group {
+  margin-top: 14px;
+}
+.section {
+  margin: 14px 10px 8px;
+  color: var(--cm-ink-faint);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 46px;
+  margin-bottom: 4px;
+  padding: 0 13px;
+  border-radius: 14px;
+  color: var(--cm-ink-dim);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.3s var(--cm-ease);
+}
+.link:hover {
+  background: var(--d-fill-2);
+  color: var(--d-strong);
+}
+.linkIcon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+}
+.active,
+.active:hover {
+  background: var(--d-nav-active);
+  color: var(--d-strong);
+}
+/* a bright bar on the left edge of the current page (the labelled, expanded rail) */
+.active::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 0;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #4d8bff, #9a5cff);
+  box-shadow: 0 0 14px rgba(122, 60, 255, 0.9);
+}
+.active svg {
+  color: var(--cm-violet-hi);
+}
+
+/* the one label shown next to whichever icon has the mouse or the keyboard focus, once the rail is icon-only.
+   It is positioned in JS (Sidebar.jsx: showTip) and sits directly in <aside>, not inside the scrolling <nav>, so
+   nav's own scrollbar can never clip it (a scrolling box clips both directions once either one scrolls). */
+.railTip {
+  position: absolute;
+  left: 100%;
+  z-index: 45;
+  margin-left: 10px;
+  padding: 7px 13px;
+  border-radius: 10px;
+  background: var(--d-popover-bg);
+  box-shadow: var(--d-popover-shadow);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transform: translateY(-50%);
+  animation: tipIn 0.12s var(--cm-ease) both;
+  pointer-events: none;
+}
+.railTip::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  background: var(--d-popover-bg);
+  transform: translateY(-50%) rotate(45deg);
+}
+@keyframes tipIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-4px);
+  }
+}
+
+.collapse {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 44px;
+  margin: 4px 14px 16px;
+  border: 1px solid var(--cm-line);
+  border-radius: 14px;
+  background: var(--d-fill-1);
+  color: var(--cm-ink-faint);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.collapse:hover {
+  background: var(--d-fill-3);
+  color: var(--d-strong);
+}
+
+/* ---- collapsed: the icon-only rail (the default look) ---- */
+.collapsed {
+  width: 92px;
+}
+.collapsed .wordmark,
+.collapsed .linkText,
+.collapsed .collapseText,
+.collapsed .section {
+  display: none;
+}
+.collapsed .brand {
+  justify-content: center;
+  padding: 0;
+}
+.collapsed .link {
+  justify-content: center;
+  padding: 0;
+}
+/* the rounded, filled shape behind the current icon, instead of the left bar (which needs the wider rail) */
+.collapsed .active::before {
+  display: none;
+}
+.collapsed .active {
+  border-radius: 15px;
+  box-shadow: 0 10px 26px -14px rgba(122, 60, 255, 0.95);
+}
+.collapsed .group + .group {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--cm-line);
+}
+.collapsed .collapse {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  width: 44px;
+}
+
+/* ---- desktop and wide tablets: the rail floats, with a little room around it ---- */
+@media (min-width: 961px) {
+  .sidebar {
+    top: 14px;
+    height: calc(100vh - 28px);
+    height: calc(100svh - 28px);
+    margin: 14px 0 14px 14px;
+    border-radius: 26px;
+    box-shadow: var(--d-sidebar-shadow), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  }
+}
+
+/* ---- phones and small tablets: the menu slides in over the page, always with its labels ---- */
+@media (max-width: 960px) {
+  .sidebar,
+  .collapsed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(300px, 86vw);
+    border-radius: 0;
+    box-shadow: none;
+    transform: translateX(-104%);
+    transition: transform 0.45s var(--cm-ease), box-shadow 0.45s ease;
+  }
+  /* the shadow only while the menu is open; when it is tucked away off-screen it must not leak onto the page */
+  .drawerOpen {
+    transform: none;
+    box-shadow: var(--d-sidebar-shadow);
+  }
+  .collapsed .wordmark,
+  .collapsed .linkText,
+  .collapsed .section {
+    display: revert;
+  }
+  .collapsed .link {
+    justify-content: flex-start;
+    padding: 0 13px;
+  }
+  .collapsed .active::before {
+    display: block;
+  }
+  .collapsed .active {
+    border-radius: 14px;
+    box-shadow: none;
+  }
+  .collapsed .brand {
+    justify-content: flex-start;
+    padding: 0 22px;
+  }
+  .collapse {
+    display: none;
+  }
+  .railTip {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .link {
+    transition: none;
+  }
+  .railTip {
+    animation: none;
+  }
+}

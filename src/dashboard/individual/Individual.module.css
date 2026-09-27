@@ -1,0 +1,626 @@
+/* The individual (creator) dashboard. Only the dashboard's theme variables are used, so light and dark both work. */
+
+/* ---------------------------------------------------------------- shared pieces */
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.tile {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--d-violet-bd);
+  border-radius: 12px;
+  background: var(--d-accent-fill);
+  color: var(--cm-violet-hi);
+}
+.tileLg {
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+}
+.tileSm {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+}
+.card {
+  border: 1px solid var(--cm-line);
+  border-radius: 22px;
+  background: var(--d-card-bg);
+  box-shadow: var(--d-card-shadow-sm);
+}
+.sectionHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 30px 0 14px;
+}
+.sectionTitle {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+.sectionSub {
+  margin-top: 2px;
+  color: var(--cm-ink-faint);
+  font-size: 0.82rem;
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--d-link);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.link:hover {
+  text-decoration: underline;
+}
+.muted {
+  color: var(--cm-ink-faint);
+}
+
+/* ---------------------------------------------------------------- Overview: quick actions */
+.actionsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.action {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.action:hover {
+  border-color: var(--d-violet-bd);
+  transform: translateY(-2px);
+}
+.action:focus-visible,
+.row:focus-visible,
+.projectCard:focus-visible {
+  outline: 2px solid var(--cm-violet-hi);
+  outline-offset: 2px;
+}
+.actionTitle {
+  margin-top: 6px;
+  font-weight: 800;
+}
+.actionText {
+  flex: 1;
+  color: var(--cm-ink-dim);
+  font-size: 0.86rem;
+}
+
+/* ---------------------------------------------------------------- project rows (Overview: recent projects) */
+.rows {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.row:hover {
+  border-color: var(--d-violet-bd);
+  background: var(--d-row-hover);
+}
+.rowTitle {
+  display: block;
+  overflow: hidden;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rowSub {
+  display: block;
+  overflow: hidden;
+  margin-top: 2px;
+  color: var(--cm-ink-faint);
+  font-size: 0.8rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.arrow {
+  color: var(--cm-ink-faint);
+}
+
+/* ---------------------------------------------------------------- My Projects: toolbar + cards */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  padding: 12px;
+}
+.search {
+  display: flex;
+  flex: 1 1 260px;
+  align-items: center;
+  gap: 10px;
+  max-width: 420px;
+  padding: 0 14px;
+  border: 1px solid var(--cm-line);
+  border-radius: 12px;
+  background: var(--d-field-bg);
+  color: var(--cm-ink-faint);
+}
+.search:focus-within {
+  border-color: var(--d-violet-bd);
+}
+.search input {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--cm-ink);
+  font: inherit;
+  font-size: 0.9rem;
+}
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.tab {
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--cm-ink-dim);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.tab:hover {
+  color: var(--cm-ink);
+}
+.tabOn {
+  border-color: var(--d-violet-bd);
+  background: var(--d-accent-fill);
+  color: var(--cm-violet-hi);
+}
+.count {
+  margin-left: 6px;
+  color: var(--cm-ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.projectCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 18px;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.projectCard:hover {
+  border-color: var(--d-violet-bd);
+  transform: translateY(-2px);
+}
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.cardTitle {
+  margin-top: 14px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+.cardDesc {
+  margin-top: 4px;
+  color: var(--cm-ink-dim);
+  font-size: 0.84rem;
+  overflow-wrap: anywhere;
+}
+.cardMeta {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--cm-line);
+  border-bottom: 1px solid var(--cm-line);
+  color: var(--cm-ink-dim);
+  font-size: 0.8rem;
+}
+.metaLine {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.metaLine svg {
+  flex: none;
+  color: var(--cm-ink-faint);
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  margin: 0 4px;
+  border-radius: 50%;
+  background: var(--cm-violet-hi);
+}
+.cardFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 12px;
+  color: var(--cm-ink-faint);
+  font-size: 0.78rem;
+}
+.none {
+  padding: 28px;
+  text-align: center;
+  color: var(--cm-ink-dim);
+}
+
+/* ---------------------------------------------------------------- Create / Edit Project */
+.formLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  align-items: start;
+  gap: 20px;
+}
+.formMain {
+  display: grid;
+  gap: 18px;
+}
+.panel {
+  padding: 22px 24px;
+}
+.panelHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.panelTitle {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+.panelSub {
+  margin-top: 2px;
+  color: var(--cm-ink-faint);
+  font-size: 0.8rem;
+}
+.two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 16px;
+}
+.choice {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--cm-line);
+  border-radius: 16px;
+  background: var(--d-field-bg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.choice:hover {
+  border-color: var(--d-violet-bd);
+}
+.choiceOn {
+  border-color: var(--d-violet-bd);
+  background: var(--d-accent-fill);
+}
+.choice input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.choice input:focus-visible ~ .choiceCheck,
+.choice:has(input:focus-visible) {
+  outline: 2px solid var(--cm-violet-hi);
+  outline-offset: 2px;
+}
+.choiceTitle {
+  display: block;
+  font-weight: 800;
+}
+.choiceText {
+  display: block;
+  margin-top: 2px;
+  color: var(--cm-ink-faint);
+  font-size: 0.8rem;
+}
+.choiceCheck {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-left: auto;
+  border: 1.5px solid var(--d-checkbox-line);
+  border-radius: 50%;
+  color: transparent;
+}
+.choiceOn .choiceCheck {
+  border-color: transparent;
+  background: linear-gradient(135deg, #4d8bff, #8b5cf6);
+  color: #fff;
+}
+.clientPick {
+  margin-top: 16px;
+}
+.hint {
+  margin-top: 6px;
+  color: var(--cm-ink-faint);
+  font-size: 0.8rem;
+}
+.side {
+  position: sticky;
+  top: 20px;
+  display: grid;
+  gap: 14px;
+}
+.preview {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 26px 20px;
+  text-align: center;
+}
+.previewTitle {
+  margin-top: 6px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+.previewFor {
+  color: var(--d-link);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.sideActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.formError {
+  color: var(--d-danger-fg);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------- one project */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  color: var(--cm-ink-dim);
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.back:hover {
+  color: var(--cm-ink);
+}
+.projectHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.projectTitleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+.projectTitle {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 800;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.projectTags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+  color: var(--cm-ink-faint);
+  font-size: 0.82rem;
+}
+.headButtons {
+  display: flex;
+  gap: 10px;
+}
+.detailLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  align-items: start;
+  gap: 20px;
+}
+.description {
+  color: var(--cm-ink-dim);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+  border: 1px solid var(--cm-line);
+  border-radius: 16px;
+  background: var(--d-fill-1);
+}
+.stepNo {
+  color: var(--d-link);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.stepTitle {
+  font-weight: 800;
+}
+.stepText {
+  flex: 1;
+  color: var(--cm-ink-dim);
+  font-size: 0.82rem;
+}
+.stepAction {
+  margin-top: 12px;
+}
+.details {
+  display: grid;
+}
+.detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--cm-line);
+}
+.detail:last-child {
+  border-bottom: 0;
+}
+.detail svg {
+  flex: none;
+  margin-top: 2px;
+  color: var(--cm-ink-faint);
+}
+.detailLabel {
+  display: block;
+  color: var(--cm-ink-faint);
+  font-size: 0.74rem;
+}
+.detailValue {
+  display: block;
+  margin-top: 2px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------------- Clients */
+.clientGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.clientCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+}
+.clientName {
+  margin-top: 8px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+.clientLine {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cm-ink-dim);
+  font-size: 0.84rem;
+  overflow-wrap: anywhere;
+}
+.clientLine svg {
+  flex: none;
+  color: var(--cm-ink-faint);
+}
+.iconButtons {
+  display: flex;
+  gap: 8px;
+}
+.formFoot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+.editor {
+  margin-bottom: 18px;
+}
+
+@media (max-width: 1100px) {
+  .formLayout,
+  .detailLayout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .side {
+    position: static;
+  }
+}
+@media (max-width: 860px) {
+  .actionsGrid,
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .two {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+  .row .arrow {
+    display: none;
+  }
+  .panel {
+    padding: 18px;
+  }
+  .sectionHead {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+}

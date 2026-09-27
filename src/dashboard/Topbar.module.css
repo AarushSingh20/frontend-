@@ -1,0 +1,235 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 84px;
+  padding: 0 clamp(16px, 2.6vw, 34px);
+  border-bottom: 1px solid var(--cm-line);
+  /* solid enough that the page can scroll under it, with no blur: a blur behind a bar is redrawn constantly */
+  background: var(--d-topbar-bg);
+}
+
+/* on desktop the sidebar floats with a little room above it (see Sidebar.module.css); the bar lines up with it */
+@media (min-width: 961px) {
+  .bar {
+    top: 14px;
+    margin-top: 14px;
+    border-radius: 20px;
+  }
+}
+
+.welcome {
+  min-width: 0;
+}
+.small {
+  color: var(--cm-ink-faint);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.name {
+  overflow: hidden;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+
+.iconButton {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--cm-line);
+  border-radius: 14px;
+  background: var(--d-fill-2);
+  color: var(--cm-ink-dim);
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.3s var(--cm-ease);
+}
+.iconButton:hover {
+  border-color: var(--cm-line-strong);
+  background: var(--d-fill-3);
+  color: var(--d-strong);
+  transform: translateY(-1px);
+}
+.menuButton {
+  display: none;
+}
+
+/* the Light / Dark button */
+.theme {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 14px 0 12px;
+  border: 1px solid var(--cm-line);
+  border-radius: 14px;
+  background: var(--d-fill-2);
+  color: var(--cm-ink);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.3s var(--cm-ease);
+}
+.theme:hover {
+  border-color: var(--cm-line-strong);
+  background: var(--d-fill-3);
+  transform: translateY(-1px);
+}
+.themeIcon {
+  display: grid;
+  place-items: center;
+  color: var(--cm-violet-hi);
+  animation: swapIcon 0.5s var(--cm-ease) both;
+}
+@keyframes swapIcon {
+  from {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+  }
+}
+
+.menuWrap {
+  position: relative;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 12px 5px 5px;
+  border: 1px solid var(--cm-line);
+  border-radius: 16px;
+  background: var(--d-fill-1);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.user:hover {
+  border-color: var(--cm-line-strong);
+  background: var(--d-fill-3);
+}
+.avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  box-shadow: 0 8px 22px -8px rgba(122, 60, 255, 0.9);
+}
+.userText {
+  display: grid;
+  line-height: 1.25;
+}
+.userName {
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.userRole {
+  color: var(--cm-ink-faint);
+  font-size: 0.68rem;
+}
+.chevron {
+  color: var(--cm-ink-faint);
+  transition: transform 0.3s var(--cm-ease);
+}
+.flip {
+  transform: rotate(180deg);
+}
+
+.panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 40;
+  width: 320px;
+  border: 1px solid var(--cm-line-strong);
+  border-radius: 18px;
+  background: var(--d-popover-bg);
+  box-shadow: var(--d-popover-shadow);
+  animation: drop 0.28s var(--cm-ease) both;
+}
+.menu {
+  width: 210px;
+  padding: 6px;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--cm-ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.menuItem:hover {
+  background: var(--d-accent-fill-2);
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@media (max-width: 960px) {
+  .menuButton {
+    display: grid;
+  }
+}
+@media (max-width: 720px) {
+  .themeLabel {
+    display: none;
+  }
+  .theme {
+    width: 44px;
+    padding: 0;
+    justify-content: center;
+  }
+  .userText,
+  .chevron {
+    display: none;
+  }
+  .user {
+    padding: 4px;
+  }
+  .panel {
+    width: min(320px, calc(100vw - 32px));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .themeIcon {
+    animation: none;
+  }
+}
